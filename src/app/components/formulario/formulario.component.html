@@ -1,11 +1,36 @@
 <form action="" [formGroup]="formulario">
 
-    
+    @if (formulario.get('nome').hasError('required') && formulario.get('nome').touched) {
+        <p class="alert alert-warning"> O nome é obrigatório </p>
+    }
+    @if (formulario.get('nome').hasError('minlength') && formulario.get('nome').touched) {
+        <p class="alert alert-warning"> O nome precisa conter pelo meno 3 caracteres </p>
+    }
     <input type="text" formControlName="nome" placeholder="Nome" class="form-control">
+
+
+    @if (formulario.get('idade').hasError('required') && formulario.get('idade').touched) {
+        <p class="alert alert-warning"> A idade é obrigatório </p>
+    }
+    @if (formulario.get('idade').hasError('min') && formulario.get('idade').touched) {
+        <p class="alert alert-warning"> A idade não pode ser inferior a 0</p>
+    }
+    @if (formulario.get('idade').hasError('max') && formulario.get('idade').touched) {
+        <p class="alert alert-warning"> A idade não pode ser inferior a 120</p>
+    }
     <input type="number" formControlName="idade" placeholder="Idade" class="form-control">
+
+   
+
+    @if (formulario.get('cidade').hasError('required') && formulario.get('cidade').touched) {
+        <p class="alert alert-warning"> O cidade é obrigatório </p>
+    }
+    @if (formulario.get('cidade').hasError('minlength') && formulario.get('cidade').touched) {
+        <p class="alert alert-warning"> O cidade precisa conter pelo meno 3 caracteres </p>
+    }
     <input type="text" formControlName="cidade" placeholder="Cidade" class="form-control">
 
-    <input type="button" value="Cadastrar" class="btn btn-primary">
+    <input type="button" value="Cadastrar" class="btn btn-primary" >
     <input type="button" value="Alterar" class="btn btn-primary">
     <input type="button" value="Remover" class="btn btn-primary">
     <input type="button" value="Cadastrar" class="btn btn-primary">
