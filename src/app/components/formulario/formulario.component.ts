@@ -22,8 +22,22 @@ export class FormularioComponent {
 
   vetor: Pessoa[] = []
 
+  indice: number = -1
+
   cadastrar(){
     this.vetor.push(this.formulario.value as Pessoa);
     this.formulario.reset()
   } 
+
+  selecionar(indice: number){
+    this.indice = indice
+
+    this.formulario.setValue({
+      nome : this.vetor[indice].nome,
+      idade: this.vetor[indice].idade,
+      cidade: this.vetor[indice].cidade,
+    })
+
+    this.btnCadastrar = false
+  }
 }
