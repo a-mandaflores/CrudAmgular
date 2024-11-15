@@ -40,4 +40,13 @@ export class FormularioComponent {
 
     this.btnCadastrar = false
   }
+
+  alterar(){
+    this.vetor[this.indice] = this.formulario.value as Pessoa;
+
+    this.formulario.reset()
+    this.btnCadastrar = true
+
+
+  }
 }

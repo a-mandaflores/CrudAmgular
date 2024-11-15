@@ -33,7 +33,7 @@
     @if (btnCadastrar) {
         <input (click)="cadastrar()" type="button" value="Cadastrar" class="btn btn-primary" [disabled]="formulario.invalid">
     }@else {
-        <input type="button" value="Alterar" class="btn btn-primary" [disabled]="formulario.invalid">
+        <input type="button" value="Alterar" (click)="alterar()" class="btn btn-primary" [disabled]="formulario.invalid">
         <input type="button" value="Remover" class="btn btn-primary">
         <input type="button" value="Calcelar" class="btn btn-primary">
     }
