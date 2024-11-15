@@ -30,10 +30,14 @@
     }
     <input type="text" formControlName="cidade" placeholder="Cidade" class="form-control">
 
-    <input type="button" value="Cadastrar" class="btn btn-primary" >
-    <input type="button" value="Alterar" class="btn btn-primary">
-    <input type="button" value="Remover" class="btn btn-primary">
-    <input type="button" value="Cadastrar" class="btn btn-primary">
+    @if (btnCadastrar) {
+        <input (click)="cadastrar()" type="button" value="Cadastrar" class="btn btn-primary" [disabled]="formulario.invalid">
+    }@else {
+        <input type="button" value="Alterar" class="btn btn-primary" [disabled]="formulario.invalid">
+        <input type="button" value="Remover" class="btn btn-primary">
+        <input type="button" value="Cadastrar" class="btn btn-primary">
+    }
+    
 </form>
 
 <table class="table table-striped">
@@ -47,5 +51,14 @@
         </tr>
     </thead>
 
-    <tbody></tbody>
+    <tbody>
+        <tr *ngFor="let v of vetor; index as indice">
+            <td>{{indice}}</td>
+            <td>{{v.nome}}</td>
+            <td>{{v.idade}}</td>
+            <td>{{v.cidade}}</td>
+            <td><button class="btn btn-primary">Selecionar</button></td>
+        </tr>
+
+    </tbody>
 </table>
