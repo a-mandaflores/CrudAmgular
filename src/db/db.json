@@ -1,0 +1,16 @@
+{
+  "body": [
+    {
+      "id": "8802",
+      "nome": "Julia",
+      "idade": 25,
+      "cidade": "João pessoa"
+    },
+    {
+      "id": "a0b3",
+      "nome": "Amanda",
+      "idade": 24,
+      "cidade": "Cuiaba"
+    }
+  ]
+}

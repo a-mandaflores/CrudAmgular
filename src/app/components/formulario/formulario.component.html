@@ -32,10 +32,11 @@
 
     @if (btnCadastrar) {
         <input (click)="cadastrar()" type="button" value="Cadastrar" class="btn btn-primary" [disabled]="formulario.invalid">
-    }@else {
+    }
+    @else {
         <input type="button" value="Alterar" (click)="alterar()" class="btn btn-primary" [disabled]="formulario.invalid">
         <input type="button" value="Remover"(click)="remover()" class="btn btn-primary">
-        <input type="button" value="Calcelar" class="btn btn-primary">
+        <input type="button" value="Calcelar" (click)="cancelamento()" class="btn btn-primary">
     }
     
 </form>
@@ -52,13 +53,12 @@
     </thead>
 
     <tbody>
-        <tr *ngFor="let v of vetor; index as indice">
-            <td>{{indice}}</td>
+        <tr *ngFor="let v of vetor$ | async">
+            <td>{{v.id}}</td>
             <td>{{v.nome}}</td>
             <td>{{v.idade}}</td>
             <td>{{v.cidade}}</td>
-            <td><button class="btn btn-primary" (click)="selecionar(indice)">Selecionar</button></td>
+            <td><button class="btn btn-primary" (click)="selecionar(v)">Selecionar</button></td>
         </tr>
-
     </tbody>
 </table>

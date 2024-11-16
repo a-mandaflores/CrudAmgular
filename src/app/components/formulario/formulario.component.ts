@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Pessoa } from '../../modelo/Pessoa';
 import { CommonModule } from '@angular/common';
+import { ModelService } from '../../servece/model.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-formulario',
@@ -12,6 +14,10 @@ import { CommonModule } from '@angular/common';
 })
 export class FormularioComponent {
 
+  constructor(private modelService: ModelService){
+    this.obterDados()
+  }
+
   formulario = new FormGroup({
     nome : new FormControl('', [Validators.required, Validators.minLength(3)]),
     idade: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(120)]),
@@ -20,34 +26,57 @@ export class FormularioComponent {
 
   btnCadastrar: boolean = true;
 
-  vetor: Pessoa[] = []
+  vetor$ = new Observable<Pessoa[]>()
 
-  indice: number = -1
+  id: number = -1
+
+  obterDados(){
+    this.vetor$ = this.modelService.getData()
+  }
 
   cadastrar(){
-    this.vetor.push(this.formulario.value as Pessoa);
-    this.formulario.reset()
+    if(this.formulario.valid){
+      this.modelService.postData({
+        nome: this.formulario.value.nome as string,
+        idade: this.formulario.value.idade as number,
+        cidade: this.formulario.value.cidade as string
+        
+      }).subscribe(_ => this.obterDados())
+      this.formulario.reset()
+    }
+    
   } 
 
-  selecionar(indice: number){
-    this.indice = indice
+  selecionar(data: Pessoa){
+    this.id = data.id
 
     this.formulario.setValue({
-      nome : this.vetor[indice].nome,
-      idade: this.vetor[indice].idade,
-      cidade: this.vetor[indice].cidade,
+      nome : data.nome,
+      idade: data.idade,
+      cidade: data.cidade
     })
 
     this.btnCadastrar = false
   }
 
   alterar(){
-    this.vetor[this.indice] = this.formulario.value as Pessoa;
+    this.modelService.putData({
+      id: this.id,
+      nome: this.formulario.value.nome as string,
+      idade: this.formulario.value.idade as number,
+      cidade: this.formulario.value.cidade as string
+    }).subscribe(_ => this.obterDados())
     this.formulario.reset()
     this.btnCadastrar = true
   }
+
   remover(){
-    this.vetor.splice(this.indice, 1);
+    this.modelService.remove(this.id).subscribe(_ => this.obterDados())
+    this.formulario.reset()
+    this.btnCadastrar = true
+  }
+
+  cancelamento(){
     this.formulario.reset()
     this.btnCadastrar = true
   }
